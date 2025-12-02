@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "3.1"
+metadata:
+  name: paymentmonitor
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          destination: d09-290-http-pp
+          url: http://sapd09.cloud:443
+          client: '290'
+        app:
+          name: ZTP_PAYMONITOR
+          package: ZTPPM
+          transport: D09K940317
+        exclude:
+          - /test/

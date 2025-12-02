@@ -1,0 +1,13 @@
+.Delayed .sapMITBText {
+  color: orange !important;
+  font-weight: bold;
+}
+
+.Error .sapMITBText {
+  color: red !important;
+  font-weight: bold;
+}
+
+.Completed .sapMITBText {
+  color: green !important;
+}

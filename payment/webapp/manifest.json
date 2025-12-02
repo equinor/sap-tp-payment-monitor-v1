@@ -1,0 +1,241 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "paymentmonitor",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.18.6",
+      "toolsId": "d33bf7fd-1dab-4be7-a232-7c777bce564b"
+    },
+    "dataSources": {
+      "ZTPPM_PAYMENT_MONITOR_VAN": {
+        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZTPPM_PAYMENT_MONITOR_VAN',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/mainService/ZTPPM_PAYMENT_MONITOR_VAN.xml"
+        }
+      },
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZTPPM_PAYMENT_MONITOR/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "ZTPPM_PAYMENT_MONITOR_VAN",
+            "annotation"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.29",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {},
+        "sap.f": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.suite.ui.generic.template": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "paymentmonitor.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "refreshAfterChange": false,
+          "metadataUrlParams": {
+            "sap-value-list": "none"
+          }
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [],
+      "targets": {}
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.suite.ui.generic.template.ListReport.view.ListReport": {
+            "controllerName": "paymentmonitor.ext.controller.ListReportExt"
+          },
+          "sap.suite.ui.generic.template.ObjectPage.view.Details": {
+            "controllerName": "paymentmonitor.ext.controller.ObjectPageExt"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui.generic.app": {
+    "_version": "1.3.0",
+    "settings": {
+      "forceGlobalRefresh": false,
+      "objectPageHeaderType": "Dynamic",
+      "considerAnalyticalParameters": true,
+      "showDraftToggle": false
+    },
+    "pages": {
+      "ListReport|PaymentItem": {
+        "entitySet": "PaymentItem",
+        "component": {
+          "name": "sap.suite.ui.generic.template.ListReport",
+          "list": true,
+          "settings": {
+            "condensedTableLayout": true,
+            "smartVariantManagement": true,
+            "enableTableFilterInPageVariant": true,
+            "dataLoadSettings": {
+              "loadDataOnAppLaunch": "always"
+            },
+            "multiSelect": true,
+            "filterSettings": {
+              "dateSettings": {
+                "fields": {
+                  "runDate": {
+                    "defaultValue": {
+                      "operation": "TODAY",
+                      "useDateRange": true
+                    },
+                    "filter": [
+                      {
+                        "path": "category",
+                        "contains": "YEAR",
+                        "exclude": true
+                      },
+                      {
+                        "path": "category",
+                        "contains": "MONTH",
+                        "exclude": true
+                      },
+                      {
+                        "path": "category",
+                        "contains": "QUARTER",
+                        "exclude": true
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "tableSettings": {
+              "type": "GridTable",
+              "multiSelect": true
+            },
+            "quickVariantSelectionX": {
+              "id": "Tabs",
+              "showCounts": true,
+              "variants": {
+                "All": {
+                  "key": "All",
+                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#All"
+                },
+                "Processing": {
+                  "key": "Processing",
+                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#Processing"
+                },
+                "Delayed": {
+                  "key": "Delayed",
+                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#Delayed"
+                },
+                "Error": {
+                  "key": "Error",
+                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#Error"
+                },
+                "ReceivedByNetwork": {
+                  "key": "ReceivedByNetwork",
+                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#ReceivedByNetwork"
+                },
+                "ReceivedByBank": {
+                  "key": "ReceivedByBank",
+                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#ReceivedByBank"
+                },
+                "AcceptedByBank": {
+                  "key": "AcceptedByBank",
+                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#AcceptedByBank"
+                },
+                "Rejected": {
+                  "key": "Rejected",
+                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#Rejected"
+                },
+                "Completed": {
+                  "key": "Completed",
+                  "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#Completed"
+                }
+              }
+            }
+          }
+        },
+        "pages": {
+          "ObjectPage|PaymentItem": {
+            "entitySet": "PaymentItem",
+            "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
+            "component": {
+              "name": "sap.suite.ui.generic.template.ObjectPage"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}
